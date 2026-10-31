@@ -1,0 +1,38 @@
+
+{% extends 'shop/base.html' %}
+{% load static %}
+
+{% block title %}Collections | LUNA Fashion{% endblock %}
+
+{% block content %}
+
+<section class="collection-page">
+
+    <div class="collection-heading">
+        <h1>OUR COLLECTIONS</h1>
+        <p>Explore timeless fashion for every season</p>
+    </div>
+
+    <div class="collection-grid">
+
+        {% for collection in collections %}
+        <a href="{% url 'collection_detail' collection.slug %}"
+           class="collection-card">
+
+            <img src="{% static 'shop/images/' %}{{ collection.image }}"
+                 alt="{{ collection.name }} Collection">
+
+            <div class="collection-card-content">
+                <h2>{{ collection.name }}</h2>
+                <p>{{ collection.description }}</p>
+                <span>EXPLORE COLLECTION →</span>
+            </div>
+
+        </a>
+        {% endfor %}
+
+    </div>
+
+</section>
+
+{% endblock %}

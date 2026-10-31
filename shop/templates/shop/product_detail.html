@@ -1,0 +1,242 @@
+
+{% extends 'shop/base.html' %}
+{% load static %}
+
+{% block title %}{{ product.name }} | LUNA Fashion{% endblock %}
+
+{% block content %}
+
+<section class="detail-page">
+
+    <!-- BREADCRUMB -->
+    <div class="breadcrumb">
+        <a href="{% url 'home' %}">Home</a>
+        <span>/</span>
+        <a href="{% url 'shop' %}">Shop</a>
+        <span>/</span>
+        <span>{{ product.name }}</span>
+    </div>
+
+    <div class="detail-layout">
+
+        <!-- PRODUCT IMAGE -->
+        <div class="detail-image">
+            <img src="{% static 'shop/images/' %}{{ product.image }}"
+                 alt="{{ product.name }}">
+        </div>
+
+        <!-- PRODUCT INFORMATION -->
+        <div class="detail-info">
+
+            <h1>{{ product.name }}</h1>
+
+            <p class="detail-price">
+                ₮{{ product.price }}
+            </p>
+
+            <p class="detail-description">
+                Энгийн, дэгжин загвартай,
+                өдөр тутмын хувцаслалтад тохиромжтой
+                LUNA Fashion бүтээгдэхүүн.
+            </p>
+
+            <!-- ADD TO CART FORM -->
+            <form method="POST"
+                  action="{% url 'add_to_cart' product.id %}"
+                  id="addCartForm">
+
+                {% csrf_token %}
+
+                <!-- SIZE -->
+                <div class="detail-option">
+                    <h3>SELECT SIZE</h3>
+
+                    <div class="size-options">
+                        {% for size in product.sizes %}
+
+                        <label class="size-option">
+                            <input type="radio"
+                                   name="size"
+                                   value="{{ size }}"
+                                   required
+                                   {% if forloop.first %}checked{% endif %}>
+                            <span>{{ size }}</span>
+                        </label>
+
+                        {% empty %}
+
+                        <label class="size-option">
+                            <input type="radio"
+                                   name="size"
+                                   value="One Size"
+                                   checked>
+                            <span>One Size</span>
+                        </label>
+
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- COLOR -->
+                <div class="detail-option">
+                    <h3>SELECT COLOR</h3>
+
+                    <div class="color-options">
+
+                        {% for color in colors %}
+
+                        <label class="color-option">
+                            <input type="radio"
+                                   name="color"
+                                   value="{{ color }}"
+                                   {% if forloop.first %}checked{% endif %}>
+
+                            <span class="color-circle color-{{ color|lower }}"
+                                  title="{{ color }}"></span>
+
+                            <span class="color-name">
+                                {{ color }}
+                            </span>
+                        </label>
+
+                        {% endfor %}
+
+                    </div>
+                </div>
+
+                <!-- QUANTITY -->
+                <div class="detail-option">
+                    <h3>QUANTITY</h3>
+
+                    <div class="quantity-control">
+
+                        <button type="button"
+                                id="minusBtn"
+                                aria-label="Decrease quantity">
+                            −
+                        </button>
+
+                        <input type="number"
+                               id="quantityInput"
+                               name="quantity"
+                               value="1"
+                               min="1"
+                               max="10"
+                               readonly>
+
+                        <button type="button"
+                                id="plusBtn"
+                                aria-label="Increase quantity">
+                            +
+                        </button>
+
+                    </div>
+                </div>
+
+                <!-- ADD TO CART -->
+                <button type="submit" class="add-cart-btn">
+                    ADD TO CART
+                </button>
+
+            </form>
+            <!-- FORM ENDS HERE -->
+
+            <!-- WISHLIST -->
+            <button type="button"
+                    class="wishlist-btn"
+                    id="wishlistBtn">
+                ♡ ADD TO WISHLIST
+            </button>
+
+            <p class="wishlist-message"
+               id="wishlistMessage"
+               aria-live="polite"></p>
+
+        </div>
+    </div>
+
+    <!-- PRODUCT DESCRIPTION -->
+    <div class="product-description-section">
+        <h2>PRODUCT DESCRIPTION</h2>
+
+        <p>
+            {{ product.name }} нь LUNA Fashion-ийн
+            энгийн бөгөөд дэгжин хэв маягийг илэрхийлсэн
+            бүтээгдэхүүн юм. Өдөр тутмын болон онцгой
+            үеийн хувцаслалтад зохицох загвартай.
+        </p>
+    </div>
+
+    <!-- DELIVERY INFORMATION -->
+    <div class="delivery-features">
+
+        <div>
+            <h3>FAST DELIVERY</h3>
+            <p>Хурдан хүргэлт</p>
+        </div>
+
+        <div>
+            <h3>SECURE SHOPPING</h3>
+            <p>Аюулгүй захиалга</p>
+        </div>
+
+        <div>
+            <h3>EASY RETURNS</h3>
+            <p>Буцаалтын боломж</p>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- JAVASCRIPT -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const quantityInput = document.getElementById("quantityInput");
+    const minusBtn = document.getElementById("minusBtn");
+    const plusBtn = document.getElementById("plusBtn");
+
+    // DECREASE QUANTITY
+    minusBtn.addEventListener("click", function () {
+        const value = Number(quantityInput.value);
+        quantityInput.value = Math.max(1, value - 1);
+    });
+
+    // INCREASE QUANTITY
+    plusBtn.addEventListener("click", function () {
+        const value = Number(quantityInput.value);
+        quantityInput.value = Math.min(10, value + 1);
+    });
+
+    // WISHLIST
+    const wishlistBtn = document.getElementById("wishlistBtn");
+    const wishlistMessage = document.getElementById("wishlistMessage");
+    const wishlistKey = "luna_wishlist_{{ product.id }}";
+
+    function updateWishlist() {
+        const saved = localStorage.getItem(wishlistKey) === "true";
+
+        wishlistBtn.textContent = saved
+            ? "♥ ADDED TO WISHLIST"
+            : "♡ ADD TO WISHLIST";
+    }
+
+    wishlistBtn.addEventListener("click", function () {
+        const saved = localStorage.getItem(wishlistKey) === "true";
+
+        localStorage.setItem(wishlistKey, String(!saved));
+
+        updateWishlist();
+
+        wishlistMessage.textContent = saved
+            ? "Wishlist-ээс хасагдлаа."
+            : "Wishlist-д нэмэгдлээ.";
+    });
+
+    updateWishlist();
+
+});
+</script>
+
+{% endblock %}

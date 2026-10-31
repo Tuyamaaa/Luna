@@ -1,0 +1,62 @@
+
+{% extends 'shop/base.html' %}
+{% load static %}
+
+{% block title %}{{ collection.name }} | LUNA Fashion{% endblock %}
+
+{% block content %}
+
+<section class="shop-page">
+
+    <div class="breadcrumb">
+        <a href="{% url 'home' %}">Home</a>
+        <span>/</span>
+        <a href="{% url 'collection' %}">Collections</a>
+        <span>/</span>
+        <span>{{ collection.name }}</span>
+    </div>
+
+    <div class="shop-heading">
+        <h1>{{ collection.name }} COLLECTION</h1>
+        <p>{{ collection.description }}</p>
+    </div>
+
+    <div class="shop-product-grid collection-products">
+
+        {% for product in products %}
+
+        <article class="shop-product-card">
+
+            <a href="{% url 'product_detail' product.id %}"
+               class="shop-product-image">
+                <img src="{% static 'shop/images/' %}{{ product.image }}"
+                     alt="{{ product.name }}"
+                     loading="lazy">
+            </a>
+
+            <div class="shop-product-info">
+                <h3>
+                    <a href="{% url 'product_detail' product.id %}">
+                        {{ product.name }}
+                    </a>
+                </h3>
+
+                <p class="shop-price">
+                    ₮{{ product.price }}
+                </p>
+            </div>
+
+        </article>
+
+        {% endfor %}
+
+    </div>
+
+    <a href="{% url 'collection' %}"
+       class="back-to-collections">
+        ← BACK TO COLLECTIONS
+    </a>
+
+</section>
+
+{% endblock %}

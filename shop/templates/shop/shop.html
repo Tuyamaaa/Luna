@@ -1,0 +1,142 @@
+
+{% extends 'shop/base.html' %}
+{% load static %}
+
+{% block title %}Shop All | LUNA Fashion{% endblock %}
+
+{% block content %}
+
+<section class="shop-page">
+
+    <!-- PAGE HEADING -->
+    <div class="shop-heading">
+        <h1>SHOP ALL</h1>
+        <p>Discover your perfect everyday style</p>
+    </div>
+
+    <!-- FILTERS -->
+    <div class="shop-toolbar">
+
+        <div class="filters">
+
+            <!-- CATEGORY -->
+            <select id="categoryFilter"
+                    aria-label="Filter by category">
+                <option value="all">All Categories</option>
+                <option value="Clothing">Clothing</option>
+                <option value="Bags">Bags</option>
+                <option value="Shoes">Shoes</option>
+            </select>
+
+            <!-- SIZE -->
+            <select id="sizeFilter"
+                    aria-label="Filter by size">
+                <option value="all">All Sizes</option>
+                <option value="XS">XS</option>
+                <option value="S">S</option>
+                <option value="M">M</option>
+                <option value="L">L</option>
+                <option value="XL">XL</option>
+                <option value="36">36</option>
+                <option value="37">37</option>
+                <option value="38">38</option>
+                <option value="39">39</option>
+                <option value="40">40</option>
+            </select>
+
+            <!-- PRICE -->
+            <select id="priceFilter"
+                    aria-label="Filter by price">
+                <option value="all">All Prices</option>
+                <option value="under150">Under ₮150,000</option>
+                <option value="150to200">
+                    ₮150,000 - ₮200,000
+                </option>
+                <option value="over200">Over ₮200,000</option>
+            </select>
+
+        </div>
+
+        <!-- SORT -->
+        <div class="shop-sort">
+            <select id="sortFilter"
+                    aria-label="Sort products">
+                <option value="default">Sort By</option>
+                <option value="low">Price: Low to High</option>
+                <option value="high">Price: High to Low</option>
+                <option value="name">Name: A to Z</option>
+            </select>
+        </div>
+
+    </div>
+
+    <!-- SEARCH -->
+    <div class="shop-search">
+
+        <input type="search"
+               id="productSearch"
+               placeholder="Search products..."
+               aria-label="Search products">
+
+        <span id="productCount" aria-live="polite">
+            {{ products|length }} products
+        </span>
+
+    </div>
+
+    <!-- PRODUCT GRID -->
+    <div class="shop-product-grid" id="productGrid">
+
+        {% for product in products %}
+
+        <article class="shop-product-card"
+                 data-id="{{ product.id }}"
+                 data-name="{{ product.name }}"
+                 data-price="{{ product.price }}"
+                 data-category="{{ product.category }}"
+                 data-sizes="{{ product.sizes|join:',' }}">
+
+            <!-- PRODUCT IMAGE -->
+            <a href="{% url 'product_detail' product.id %}"
+               class="shop-product-image">
+
+                <img src="{% static 'shop/images/' %}{{ product.image }}"
+                     alt="{{ product.name }}"
+                     loading="lazy">
+
+            </a>
+
+            <!-- PRODUCT INFORMATION -->
+            <div class="shop-product-info">
+
+                <!-- CLICKABLE PRODUCT NAME -->
+                <h3>
+                    <a href="{% url 'product_detail' product.id %}">
+                        {{ product.name }}
+                    </a>
+                </h3>
+
+                <!-- PRODUCT PRICE -->
+                <p class="shop-price">
+                    ₮{{ product.price }}
+                </p>
+
+            </div>
+
+        </article>
+
+        {% endfor %}
+
+    </div>
+
+    <!-- EMPTY SEARCH RESULT -->
+    <p id="noProducts" class="no-products" hidden>
+        No products found.
+    </p>
+
+</section>
+
+<!-- SHOP FILTER JAVASCRIPT -->
+<script src="{% static 'shop/shop.js' %}" defer></script>
+
+{% endblock %}

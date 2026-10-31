@@ -1,0 +1,93 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{% block title %}LUNA Fashion{% endblock %}</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'shop/style.css' %}">
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header class="header">
+        <div class="header-container">
+
+            <a href="{% url 'home' %}" class="logo">LUNA</a>
+
+            <nav class="nav-menu" id="navMenu">
+                <a href="{% url 'home' %}">HOME</a>
+                <a href="{% url 'shop' %}">SHOP</a>
+                <a href="{% url 'collection' %}">COLLECTION</a>
+                <a href="{% url 'about' %}">ABOUT</a>
+                <a href="{% url 'contact' %}">CONTACT</a>
+            </nav>
+
+            <div class="header-actions">
+                <a href="{% url 'cart' %}" class="cart-icon"
+                   aria-label="Shopping cart">♡ 🛍</a>
+                <button class="menu-toggle" id="menuToggle"
+                        aria-label="Toggle menu"
+                        aria-expanded="false"
+                        aria-controls="navMenu">☰</button>
+            </div>
+
+        </div>
+    </header>
+
+    <!-- PAGE CONTENT -->
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-container">
+
+            <div class="footer-column">
+                <h2 class="footer-logo">LUNA</h2>
+                <p>Энгийн, дэгжин, өөрийнхөөрөө.</p>
+            </div>
+
+            <div class="footer-column">
+                <h3>QUICK LINKS</h3>
+                <a href="{% url 'home' %}">Home</a>
+                <a href="{% url 'shop' %}">Shop</a>
+                <a href="{% url 'collection' %}">Collection</a>
+                <a href="{% url 'about' %}">About Us</a>
+                <a href="{% url 'contact' %}">Contact</a>
+            </div>
+
+            <div class="footer-column">
+                <h3>CONTACT US</h3>
+                <p>Ulaanbaatar, Mongolia</p>
+                <p>info@lunafashion.mn</p>
+                <p>Mon – Sat: 10:00 – 20:00</p>
+            </div>
+
+        </div>
+
+        <div class="footer-bottom">
+            <p>© 2026 LUNA Fashion. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        const menuToggle = document.getElementById("menuToggle");
+        const navMenu = document.getElementById("navMenu");
+
+        menuToggle.addEventListener("click", function () {
+            const isOpen = navMenu.classList.toggle("active");
+            menuToggle.setAttribute("aria-expanded", String(isOpen));
+        });
+    </script>
+</body>
+</html>

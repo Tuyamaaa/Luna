@@ -1,0 +1,110 @@
+
+{% extends 'shop/base.html' %}
+{% load static %}
+
+{% block title %}Contact Us | LUNA Fashion{% endblock %}
+
+{% block content %}
+
+<section class="contact-page">
+
+    <!-- HEADING -->
+    <div class="contact-heading">
+        <p class="contact-eyebrow">WE'D LOVE TO HEAR FROM YOU</p>
+        <h1>CONTACT US</h1>
+        <p>
+            Have a question or need assistance?
+            Send us a message.
+        </p>
+    </div>
+
+    <div class="contact-layout">
+
+        <!-- CONTACT FORM -->
+        <div class="contact-form-section">
+
+            <h2>Send Us a Message</h2>
+
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="contact-success" role="status">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            <form method="POST" class="contact-form">
+                {% csrf_token %}
+
+                <div class="form-group">
+                    <label for="{{ form.name.id_for_label }}">
+                        YOUR NAME
+                    </label>
+                    {{ form.name }}
+                    {{ form.name.errors }}
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.email.id_for_label }}">
+                        EMAIL ADDRESS
+                    </label>
+                    {{ form.email }}
+                    {{ form.email.errors }}
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.message.id_for_label }}">
+                        YOUR MESSAGE
+                    </label>
+                    {{ form.message }}
+                    {{ form.message.errors }}
+                </div>
+
+                <button type="submit" class="contact-submit">
+                    SEND MESSAGE
+                </button>
+            </form>
+
+        </div>
+
+        <!-- CONTACT INFORMATION -->
+        <div class="contact-info">
+
+            <h2>GET IN TOUCH</h2>
+
+            <p class="contact-info-description">
+                We're here to help you with your shopping
+                experience at LUNA Fashion.
+            </p>
+
+            <div class="contact-info-item">
+                <div class="contact-info-icon">⌖</div>
+                <div>
+                    <h3>OUR LOCATION</h3>
+                    <p>Ulaanbaatar, Mongolia</p>
+                </div>
+            </div>
+
+            <div class="contact-info-item">
+                <div class="contact-info-icon">✉</div>
+                <div>
+                    <h3>EMAIL US</h3>
+                    <p>info@lunafashion.mn</p>
+                </div>
+            </div>
+
+            <div class="contact-info-item">
+                <div class="contact-info-icon">◷</div>
+                <div>
+                    <h3>OPENING HOURS</h3>
+                    <p>Monday – Saturday</p>
+                    <p>10:00 AM – 8:00 PM</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</section>
+
+{% endblock %}

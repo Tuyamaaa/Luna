@@ -1,0 +1,112 @@
+
+{% extends 'shop/base.html' %}
+{% load static %}
+
+{% block title %}About Us | LUNA Fashion{% endblock %}
+
+{% block content %}
+
+<section class="about-page">
+
+    <!-- PAGE HEADING -->
+    <div class="about-page-heading">
+        <p class="about-eyebrow">GET TO KNOW US</p>
+        <h1>ABOUT LUNA</h1>
+        <p>Where timeless elegance meets everyday comfort.</p>
+    </div>
+
+    <!-- OUR STORY -->
+    <div class="about-story">
+
+        <div class="about-story-image">
+            <img src="{% static 'shop/images/about-story.jpg' %}"
+                 alt="LUNA Fashion Our Story">
+        </div>
+
+        <div class="about-story-text">
+            <p class="about-eyebrow">OUR STORY</p>
+            <h2>Fashion That Feels Like You</h2>
+
+            <p>
+                LUNA Fashion нь орчин үеийн эмэгтэйчүүдэд зориулсан
+                энгийн, дэгжин хэв маягтай хувцасны онлайн дэлгүүр юм.
+                Бид өдөр тутамдаа тав тухтай, өөртөө итгэлтэй,
+                үзэсгэлэнтэй байх боломжийг хүн бүрд
+                олгохыг зорьдог.
+            </p>
+
+            <p>
+                Манай цуглуулга нь минимал загвар,
+                зөөлөн өнгө болон цаг хугацаанаас үл хамаарах
+                хувцаслалтыг эрхэмлэдэг.
+            </p>
+        </div>
+
+    </div>
+
+    <!-- OUR MISSION -->
+    <div class="about-mission">
+        <p class="about-eyebrow">OUR MISSION</p>
+
+        <h2>Simple. Elegant. Confident.</h2>
+
+        <p>
+            Бидний зорилго бол чанартай, тав тухтай,
+            минимал хэв маягийн хувцаслалтаар дамжуулан
+            эмэгтэй хүн бүрийн өөрийн гэсэн онцлог,
+            гоо үзэсгэлэнг тодруулах юм.
+        </p>
+    </div>
+
+    <!-- OUR VALUES -->
+    <div class="about-values">
+
+        <div class="about-values-heading">
+            <p class="about-eyebrow">WHAT WE BELIEVE IN</p>
+            <h2>OUR VALUES</h2>
+        </div>
+
+        <div class="values-grid">
+
+            <div class="value-card">
+                <div class="value-icon">✧</div>
+                <h3>Elegance</h3>
+                <p>
+                    Энгийн атлаа дэгжин хэв маягийг
+                    хувцас бүрдээ шингээхийг эрхэмлэдэг.
+                </p>
+            </div>
+
+            <div class="value-card">
+                <div class="value-icon">♡</div>
+                <h3>Comfort</h3>
+                <p>
+                    Өдөр тутмын амьдралд тав тухтай
+                    мэдрэмж төрүүлэх загварыг санал болгодог.
+                </p>
+            </div>
+
+            <div class="value-card">
+                <div class="value-icon">✦</div>
+                <h3>Individuality</h3>
+                <p>
+                    Хүн бүрийн өвөрмөц хэв маяг,
+                    өөрийгөө илэрхийлэх сонголтыг хүндэтгэдэг.
+                </p>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- SHOP CTA -->
+    <div class="about-cta">
+        <h2>Discover Your Own Style</h2>
+        <p>Explore the latest pieces from LUNA Fashion.</p>
+        <a href="{% url 'shop' %}" class="dark-btn">
+            SHOP COLLECTION
+        </a>
+    </div>
+
+</section>
+
+{% endblock %}

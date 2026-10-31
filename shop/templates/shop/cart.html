@@ -1,0 +1,149 @@
+
+{% extends 'shop/base.html' %}
+{% load static %}
+
+{% block title %}Shopping Cart | LUNA Fashion{% endblock %}
+
+{% block content %}
+
+<section class="cart-page">
+
+    <h1>SHOPPING BAG</h1>
+    <p class="cart-subtitle">Review your selected items</p>
+
+    {% if cart_items %}
+
+    <div class="cart-layout">
+
+        <div class="cart-items">
+            {% for item in cart_items %}
+
+            <article class="cart-item">
+
+                <img src="{% static 'shop/images/' %}{{ item.product.image }}"
+                     alt="{{ item.product.name }}">
+
+                
+<div class="cart-item-info">
+
+    <h2>{{ item.product.name }}</h2>
+
+    <p>Size: {{ item.size }}</p>
+    <p>Color: {{ item.color }}</p>
+
+    <!-- QUANTITY -->
+    <div class="cart-quantity">
+
+        <form method="POST"
+              action="{% url 'update_cart' %}">
+            {% csrf_token %}
+            <input type="hidden"
+                   name="key"
+                   value="{{ item.key }}">
+            <input type="hidden"
+                   name="action"
+                   value="decrease">
+            <button type="submit"
+                    aria-label="Decrease quantity">−</button>
+        </form>
+
+        <span>{{ item.quantity }}</span>
+
+        <form method="POST"
+              action="{% url 'update_cart' %}">
+            {% csrf_token %}
+            <input type="hidden"
+                   name="key"
+                   value="{{ item.key }}">
+            <input type="hidden"
+                   name="action"
+                   value="increase">
+            <button type="submit"
+                    aria-label="Increase quantity">+</button>
+        </form>
+
+    </div>
+
+    <strong class="cart-item-price">
+        ₮{{ item.subtotal }}
+    </strong>
+
+    <!-- REMOVE -->
+    <form method="POST"
+          action="{% url 'remove_from_cart' %}">
+        {% csrf_token %}
+
+        <input type="hidden"
+               name="key"
+               value="{{ item.key }}">
+
+        <button type="submit"
+                class="remove-cart-btn">
+            REMOVE
+        </button>
+    </form>
+
+</div>
+
+
+            </article>
+
+            {% endfor %}
+
+            <a href="{% url 'shop' %}"
+               class="continue-shopping">
+                ← CONTINUE SHOPPING
+            </a>
+        </div>
+
+        <aside class="order-summary">
+
+            <h2>ORDER SUMMARY</h2>
+
+            <div class="summary-line">
+                <span>Subtotal</span>
+                <span>₮{{ total }}</span>
+            </div>
+
+            <div class="summary-line">
+                <span>Shipping</span>
+                <span>Calculated later</span>
+            </div>
+
+            <hr>
+
+            <div class="summary-line summary-total">
+                <span>Total</span>
+                <span>₮{{ total }}</span>
+            </div>
+
+            <p class="checkout-note">
+                Захиалгын төлбөрийн хэсгийг дараа нь хөгжүүлнэ.
+            </p>
+
+            <a href="{% url 'checkout' %}"
+   class="add-cart-btn checkout-link">
+    PROCEED TO CHECKOUT
+</a>
+</a>
+
+        </aside>
+    </div>
+
+    {% else %}
+
+    <div class="empty-cart">
+        <div class="empty-cart-icon">♧</div>
+        <h2>YOUR BAG IS EMPTY</h2>
+        <p>You haven't added any items to your bag yet.</p>
+
+        <a href="{% url 'shop' %}" class="dark-btn">
+            CONTINUE SHOPPING
+        </a>
+    </div>
+
+    {% endif %}
+
+</section>
+
+{% endblock %}

@@ -1,0 +1,29 @@
+
+{% extends 'shop/base.html' %}
+
+{% block title %}Order Confirmed | LUNA Fashion{% endblock %}
+
+{% block content %}
+<section class="order-success-page">
+
+    <div class="success-symbol">✓</div>
+
+    <h1>ORDER CONFIRMED!</h1>
+
+    <p>
+        Thank you for shopping with LUNA Fashion.
+        Your order has been received.
+    </p>
+
+    <div class="success-details">
+        <p>Order Number: <strong>#{{ order.id }}</strong></p>
+        <p>Total: <strong>₮{{ order.total_price }}</strong></p>
+        <p>Status: <strong>{{ order.get_status_display }}</strong></p>
+    </div>
+
+    <a href="{% url 'shop' %}" class="dark-btn">
+        CONTINUE SHOPPING
+    </a>
+
+</section>
+{% endblock %}
